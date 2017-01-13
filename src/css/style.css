@@ -1,0 +1,13 @@
+body{
+    margin:0px;
+    padding:0px;
+}
+#turn{
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0px;
+    left:0px;
+    background: white url('../img/playportrait.png') no-repeat center center;
+    display:none;
+}
