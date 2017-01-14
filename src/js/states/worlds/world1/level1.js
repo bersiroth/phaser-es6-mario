@@ -3,34 +3,6 @@ import Player from "entities/player";
 
 export class Level1 extends Phaser.State {
 
-    preload() {
-        this.game.scale.mode = Phaser.ScaleManager.SHOW_ALL;
-        this.game.scale.minHeight = Const.GAME_HEIGHT * Const.SCALE;
-        this.game.scale.minWidth = Const.GAME_WIDTH * Const.SCALE;
-        if(!this.game.device.desktop || Const.DEBUG_MOBILE) {
-            if(!Const.DEBUG_MOBILE){
-                // game.scale.minHeight = (23 * BLOCK_HEIGHT) * (SCALE * 2) ;
-                // game.scale.minWidth = GAME_WIDTH * (SCALE * 2);
-                this.game.scale.minHeight = (23 * Const.BLOCK_HEIGHT) * Const.SCALE;
-                this.game.scale.minWidth = Const.GAME_WIDTH * Const.SCALE;
-                this.game.scale.forceOrientation(false, true);
-                this.game.scale.enterIncorrectOrientation.add(function(){
-                    if(!this.game.device.desktop){
-                        document.getElementById("turn").style.display="block";
-                    }
-                });
-                this.game.scale.leaveIncorrectOrientation.add(function(){
-                    if(!this.game.device.desktop){
-                        document.getElementById("turn").style.display="none";
-                    }
-                });
-            } else {
-                this.game.scale.minHeight = (23 * Const.BLOCK_HEIGHT) * Const.SCALE;
-            }
-            this.game.scale.setGameSize(Const.GAME_WIDTH, 23 * Const.BLOCK_HEIGHT);
-        }
-    }
-
     create() {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.physics.arcade.gravity.y = Const.GRAVITY;
