@@ -10,7 +10,7 @@ var sourcemaps  = require("gulp-sourcemaps");
 var runSequence = require("run-sequence");
 var del         = require('del');
 var rename      = require("gulp-rename");
-var ftp         = require( 'vinyl-ftp' );
+var ftp         = require('vinyl-ftp');
 
 var browserify  = require("browserify");
 var babelify    = require("babelify");
@@ -20,7 +20,7 @@ var gutil       = require('gulp-util');
 var chalk       = require('chalk');
 
 
-// ====== require ======
+// ====== config ======
 
 var conf = require('./gulpfileConfig');
 
@@ -194,20 +194,55 @@ gulp.task('prod-conf-debug', function() {
     conf.target = conf.env == 'dev'? 'dist': 'build';
 });
 
-gulp.task('build-prod', ['prod-conf', 'build'], function(){});
+gulp.task('build-prod', ['prod-conf', 'build']);
 
-gulp.task('server-prod', ['prod-conf', 'server-start'], function(){});
+gulp.task('server-prod', ['prod-conf', 'server-start']);
 
-gulp.task('server-prod-debug', ['prod-conf-debug', 'server-start'], function(){});
+gulp.task('server-prod-debug', ['prod-conf-debug', 'server-start']);
 
-gulp.task('deploy', ['build-prod'], function() {
-    var conn = ftp.create({
+
+// ====== deploy ======
+
+var conn;
+gulp.task('connection-server', function(callback) {
+    conn = ftp.create({
         host:     conf.host,
         user:     conf.user,
         password: conf.password,
         parallel: 10,
+    })
+    callback();
+});
+
+gulp.task('clean-server', ['connection-server'], function(callback) {
+    var globs = [
+        'css',
+        'img/controller',
+        'img',
+        'js',
+        'map',
+        'sound',
+        ''
+    ];
+
+    globs.forEach(function(path){
+        conn.rmdir(conf.base + '/' + path, function(err){
+            if(err) {
+                callback(err);
+                console.log(conf.base + '/' + path);
+            }
+        });
     });
 
-    return gulp.src('./' + conf.target + '/**/*')
-        .pipe(conn.dest('/www/mario/'));
+    callback();
+})
+
+gulp.task('push-server', ['connection-server'], function() {
+    return gulp.src('./' + conf.target + '/**')
+        .pipe(conn.dest(conf.base));
+
+});
+
+gulp.task('deploy', function(callback) {
+    runSequence(['build-prod', 'clean-server'], 'push-server', callback);
 });

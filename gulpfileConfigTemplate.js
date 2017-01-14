@@ -5,5 +5,6 @@ module.exports = {
     debug: false,
     host: 'host',
     user: 'user',
-    password: 'password'
+    password: 'password',
+    base: '/www/mario/'
 };
