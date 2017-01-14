@@ -75,6 +75,11 @@ gulp.task('maps', function() {
         .pipe(gulp.dest('./' + conf.target + '/map/'))
 });
 
+gulp.task('sounds', function() {
+    return gulp.src('./src/sound/**/*')
+        .pipe(gulp.dest('./' + conf.target + '/sound/'))
+});
+
 gulp.task('images', function() {
     return gulp.src('./src/img/**/*')
         .pipe(gulp.dest('./' + conf.target + '/img/'))
@@ -138,7 +143,7 @@ gulp.task('clean', function(){
 });
 
 gulp.task('build', function(callback){
-    runSequence('clean', 'vendor', 'babelify', 'styles', 'images', 'maps', 'htmls', 'inject', callback);
+    runSequence('clean', 'vendor', 'babelify', 'styles', 'images', 'sounds', 'maps', 'htmls', 'inject', callback);
 });
 
 
