@@ -24,13 +24,13 @@ export default class Player extends Phaser.Sprite {
     }
 
     update() {
-        this.run();
-        this.move();
-        this.jump();
-        this.flip();
+        this._run();
+        this._move();
+        this._jump();
+        this._flip();
     }
 
-    run() {
+    _run() {
         this.animations.currentAnim.delay = Math.min(200, 10000/Math.abs(this.body.velocity.x));
 
         let acceMax = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT).isDown ? Const.MAX_SPEED_SPRINT : Const.MAX_SPEED;
@@ -40,7 +40,7 @@ export default class Player extends Phaser.Sprite {
         this.body.maxVelocity.set(acceMax, Const.MAX_SPEED * 10);
     }
 
-    move() {
+    _move() {
         if (this.cursors.right.isDown) {
             this.body.acceleration.x = Const.ACCE;
             this.direction = Phaser.RIGHT;
@@ -77,7 +77,7 @@ export default class Player extends Phaser.Sprite {
         }
     }
 
-    jump() {
+    _jump() {
         this.cursors.up.onUp.add(function(){
             this.canJump = true;
         }, this);
@@ -104,7 +104,7 @@ export default class Player extends Phaser.Sprite {
         }
     }
 
-    flip() {
+    _flip() {
         this.scale.x = this.face === Phaser.LEFT ? -1 : 1;
     }
 }
