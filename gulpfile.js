@@ -209,32 +209,38 @@ gulp.task('connection-server', function(callback) {
         host:     conf.host,
         user:     conf.user,
         password: conf.password,
-        parallel: 10,
+        parallel: 1,
     })
     callback();
 });
 
 gulp.task('clean-server', ['connection-server'], function(callback) {
     var globs = [
-        'css',
+        'sound/level',
+        'sound',
         'img/controller',
         'img',
         'js',
         'map',
-        'sound',
-        ''
+        'css',
     ];
 
+    var count = 0;
     globs.forEach(function(path){
         conn.rmdir(conf.base + '/' + path, function(err){
             if(err) {
                 callback(err);
                 console.log(conf.base + '/' + path);
             }
+            count++;
         });
     });
 
-    callback();
+    setTimeout(function () {
+        if(count == globs.length){
+            callback();
+        }
+    }, 5000);
 })
 
 gulp.task('push-server', ['connection-server'], function() {
