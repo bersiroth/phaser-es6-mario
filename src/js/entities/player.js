@@ -18,6 +18,7 @@ export default class Player extends Phaser.Sprite {
         this.anchor.setTo(.5,.5);
         this.body.setSize(this.body.width,this.body.height);
         this.scale.x = 1;
+        this.canJump = true;
 
         this.cursors = game.input.keyboard.createCursorKeys();
     }
