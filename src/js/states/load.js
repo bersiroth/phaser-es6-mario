@@ -2,10 +2,8 @@
 export class Load extends Phaser.State {
 
     preload() {
-        this.loaderBg = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loader-bg');
-        this.loaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loader-bar');
-        this.loaderBg.anchor.setTo(0.5);
-        this.loaderBar.anchor.setTo(0.5);
+        this.loaderBg = this.add.sprite(this.game.world.centerX - 77, this.game.world.centerY - 3, 'loader-bg');
+        this.loaderBar = this.add.sprite(this.game.world.centerX - 75, this.game.world.centerY, 'loader-bar');
         this.load.setPreloadSprite(this.loaderBar);
 
         this.load.tilemap('world', 'map/world-anim.json', null, Phaser.Tilemap.TILED_JSON);
