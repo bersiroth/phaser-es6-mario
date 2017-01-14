@@ -5,7 +5,7 @@ import Const from "./const";
 export class Game extends Phaser.Game {
 
     constructor(id) {
-        super(Const.GAME_WIDTH(), Const.GAME_HEIGHT(), Phaser.AUTO, id, null);
+        super(Const.GAME_WIDTH, Const.GAME_HEIGHT, Phaser.AUTO, id, null);
         this.addStates();
     }
 
@@ -15,8 +15,8 @@ export class Game extends Phaser.Game {
         },  this);
     }
 
-    start(stateName) {
-        this.state.start(stateName);
+    start() {
+        this.state.start('Boot');
     }
 }
 

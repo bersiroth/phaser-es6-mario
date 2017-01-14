@@ -1,4 +1,5 @@
 import Const from "./../const";
+import Player from "./../entities/player";
 
 export class Play extends Phaser.State {
 
@@ -16,12 +17,14 @@ export class Play extends Phaser.State {
         this.load.image('A-letter', 'img/controller/a.png');
         this.load.image('B-letter', 'img/controller/b.png');
         this.load.image('nes-controler', 'img/controller/controler-small.png');
-        this.load.image('nintendo', 'img/controller/nintendo.png');
         this.load.spritesheet('mario', 'img/mario_sheet_small.png', 16, 16, 14);
 
+        // this.loaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'nintendo');
+        // this.load.setPreloadSprite(this.loaderBar);
+
         this.game.scale.mode = Phaser.ScaleManager.SHOW_ALL;
-        this.game.scale.minHeight = Const.GAME_HEIGHT() * Const.SCALE;
-        this.game.scale.minWidth = Const.GAME_WIDTH() * Const.SCALE;
+        this.game.scale.minHeight = Const.GAME_HEIGHT * Const.SCALE;
+        this.game.scale.minWidth = Const.GAME_WIDTH * Const.SCALE;
         if(!this.game.device.desktop || Const.DEBUG_MOBILE) {
             if(!Const.DEBUG_MOBILE){
                 // game.scale.minHeight = (23 * BLOCK_HEIGHT) * (SCALE * 2) ;
@@ -42,9 +45,8 @@ export class Play extends Phaser.State {
             } else {
                 this.game.scale.minHeight = (23 * Const.BLOCK_HEIGHT) * Const.SCALE;
             }
-            this.game.scale.setGameSize(Const.GAME_WIDTH(), 23 * Const.BLOCK_HEIGHT);
+            this.game.scale.setGameSize(Const.GAME_WIDTH, 23 * Const.BLOCK_HEIGHT);
         }
-        this.game.scale.refresh();
     }
 
     create() {
@@ -95,16 +97,9 @@ export class Play extends Phaser.State {
         this.layer.resizeWorld();
         this.layer.wrap = true;
 
-        this.player = this.game.add.sprite(32, 200, 'mario');
-        // this.player = game.add.sprite(245, 200, 'mario');
-        this.player.smoothed = true;
-        this.player.animations.add('walk', [1, 2, 3], 8, true);
-        this.game.physics.arcade.enable(this.player);
-        this.player.body.drag.set(Const.DRAG,0);
-        this.player.body.collideWorldBounds = true;
-        this.player.body.maxVelocity.set(Const.MAX_SPEED, 80);
-        this.player.anchor.setTo(.5,.5);
-        this.player.body.setSize(this.player.body.width,this.player.body.height);
+        // this.player = this.game.add.sprite(32, 200, 'mario');
+        this.player = new Player(this.game, 32, 200, 'mario', 1);
+        this.game.world.addChild(this.player);
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
 
@@ -154,14 +149,14 @@ export class Play extends Phaser.State {
             }, this);
             up.events.onInputOut.add(function () {
                 this.cursors.up.isDown = false;
-                this.canJump = true;
+                this.player.canJump = true;
             }, this);
             up.events.onInputDown.add(function () {
                 this.cursors.up.isDown = true;
             }, this);
             up.events.onInputUp.add(function () {
                 this.cursors.up.isDown = false;
-                this.canJump = true;
+                this.player.canJump = true;
             }, this);
 
             let down = this.game.add.button(48, 312, 'down');
@@ -188,14 +183,14 @@ export class Play extends Phaser.State {
             }, this);
             A.events.onInputOut.add(function () {
                 this.cursors.up.isDown = false;
-                this.canJump = true;
+                this.player.canJump = true;
             }, this);
             A.events.onInputDown.add(function () {
                 this.cursors.up.isDown = true;
             }, this);
             A.events.onInputUp.add(function () {
                 this.cursors.up.isDown = false;
-                this.cursors = true;
+                this.player.canJump = true;
             }, this);
             let aLetter = this.game.add.sprite(165, 320, 'A-letter');
             aLetter.fixedToCamera = true;
@@ -216,20 +211,19 @@ export class Play extends Phaser.State {
             B.events.onInputUp.add(function () {
                 this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT).isDown = false;
             }, this);
-            var bLetter = this.game.add.sprite(215, 320, 'B-letter');
+            let bLetter = this.game.add.sprite(215, 320, 'B-letter');
             bLetter.fixedToCamera = true;
 
-            var center = this.game.add.sprite(48,273, 'center');
+            let center = this.game.add.sprite(48,273, 'center');
             center.fixedToCamera = true;
         }
     }
 
     update() {
+
         if(!this.player.inCamera){
             this.game.state.restart();
         }
-
-        this.player.scale.x = 1;
 
         this.game.physics.arcade.collide(this.player, this.layer);
 
@@ -271,72 +265,6 @@ export class Play extends Phaser.State {
             }
         }, null, this);
 
-        this.player.animations.currentAnim.delay = Math.min(200, 10000/Math.abs(this.player.body.velocity.x));
-
-        let acceMax = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT).isDown ? Const.MAX_SPEED_SPRINT : Const.MAX_SPEED;
-        this.player.body.maxVelocity.set(acceMax, Const.MAX_SPEED * 10);
-
-        if (this.cursors.right.isDown) {
-            this.player.body.acceleration.x = Const.ACCE;
-            this.direction = "right";
-        } else if (this.cursors.left.isDown) {
-            this.direction = "left";
-            this.player.body.acceleration.x = -Const.ACCE;
-        } else if (this.cursors.down.isDown) {
-
-        } else {
-            this.player.body.acceleration.x = 0;
-        }
-
-        if (this.player.body.touching.down || this.player.body.onFloor()) {
-            if (this.player.body.velocity.x == 0) {
-                this.player.animations.stop();
-                this.player.frame = 0;
-            } else {
-                if (this.player.body.velocity.x > 0 && this.direction == "left") {
-                    this.player.body.acceleration.x *= 5;
-                    this.player.animations.stop();
-                    this.player.frame = 4;
-                    this.face = "left";
-                } else if (this.player.body.velocity.x < 0 && this.direction == "right") {
-                    this.player.body.acceleration.x *= 5;
-                    this.player.animations.stop();
-                    this.player.frame = 4;
-                    this.face = "right";
-                } else {
-                    this.player.animations.play('walk');
-                    this.face = this.direction;
-                }
-            }
-        }
-
-        this.lastDirection = this.direction;
-
-        this.cursors.up.onUp.add(function(){
-            this.canJump = true;
-        }, this);
-
-        if ((this.player.body.touching.down || this.player.body.onFloor()) && this.cursors.up.isDown && this.canJump) {
-            this.player.animations.stop();
-            this.player.frame = 5;
-            this.player.body.velocity.y = Const.SMALL_JUMP_SPEED;
-            this.jumptimer = 1;
-            this.canJump = false;
-        } else if (this.cursors.up.isDown && (this.jumptimer != 0)) {
-            if (this.jumptimer > Const.MAX_JUMP_TIMER) {
-                this.jumptimer = 0;
-            } else {
-                this.jumptimer++;
-                this.player.body.velocity.y = -200;
-            }
-        } else if (this.jumptimer != 0) {
-            this.jumptimer = 0;
-        }
-
-        if(this.player.body.touching.up && !this.player.body.onFloor()){
-            this.jumptimer = 0;
-        }
-
         if(this.game.camera.x < this.player.body.x-(Const.BLOCK_HEIGHT*7)){
             this.game.camera.x = this.player.body.x-(Const.BLOCK_HEIGHT*7);
         }
@@ -347,9 +275,6 @@ export class Play extends Phaser.State {
             this.player.body.velocity.x = 0;
         }
 
-        if(this.face == "left"){
-            this.player.scale.x = -1;
-        }
     }
 
 }

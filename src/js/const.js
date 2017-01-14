@@ -2,10 +2,10 @@ module.exports = {
 
     BLOCK_HEIGHT: 16,
     BLOCK_WIDTH: 16,
-    GAME_HEIGHT: function() {
+    get GAME_HEIGHT () {
         return 15 * this.BLOCK_HEIGHT;
     },
-    GAME_WIDTH: function() {
+    get GAME_WIDTH () {
         return 15 * this.BLOCK_WIDTH;
     },
     GRAVITY: 960,
