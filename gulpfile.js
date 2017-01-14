@@ -94,6 +94,7 @@ gulp.task('styles', function() {
 
 gulp.task('babelify', function () {
     var bundler = browserify({
+        paths: ['./src/js'],
         entries: 'src/js/app.js',
         debug: true
     });
