@@ -1,27 +1,9 @@
-import Const from "./../const";
-import Player from "./../entities/player";
+import Const from "const";
+import Player from "entities/player";
 
-export class Play extends Phaser.State {
+export class Level1 extends Phaser.State {
 
     preload() {
-        this.load.tilemap('world', 'map/world-anim.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.spritesheet('world', 'img/world.png', 16, 16);
-        this.load.spritesheet('item', 'img/item.png', 16, 16);
-        this.load.image('up', 'img/controller/up.png');
-        this.load.image('down', 'img/controller/down.png');
-        this.load.image('left', 'img/controller/left.png');
-        this.load.image('right', 'img/controller/right.png');
-        this.load.image('center', 'img/controller/center.png');
-        this.load.image('A-button', 'img/controller/button.png');
-        this.load.image('B-button', 'img/controller/button.png');
-        this.load.image('A-letter', 'img/controller/a.png');
-        this.load.image('B-letter', 'img/controller/b.png');
-        this.load.image('nes-controler', 'img/controller/controler-small.png');
-        this.load.spritesheet('mario', 'img/mario_sheet_small.png', 16, 16, 14);
-
-        // this.loaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'nintendo');
-        // this.load.setPreloadSprite(this.loaderBar);
-
         this.game.scale.mode = Phaser.ScaleManager.SHOW_ALL;
         this.game.scale.minHeight = Const.GAME_HEIGHT * Const.SCALE;
         this.game.scale.minWidth = Const.GAME_WIDTH * Const.SCALE;

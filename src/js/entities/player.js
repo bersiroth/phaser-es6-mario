@@ -1,7 +1,7 @@
 /**
  * Created by bernard on 14/01/17.
  */
-import Const from './../const';
+import Const from 'const';
 
 export default class Player extends Phaser.Sprite {
 
