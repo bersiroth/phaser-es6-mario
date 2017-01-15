@@ -8,10 +8,10 @@ start:
 		docker start mario
 
 server:
-		docker exec mario gulp server-dist
+		docker exec mario gulp server
 
-server-build:
-		docker exec mario gulp build
+deploy:
+		docker exec mario gulp deploy
 
 ssh:
 		docker exec -i -t mario /bin/bash
