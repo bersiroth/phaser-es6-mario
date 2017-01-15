@@ -4,8 +4,8 @@ export class Boot extends Phaser.State {
 
     preload() {
         this.game.stage.backgroundColor = '#000';
-        this.load.image('loader-bar', 'img/loading/loader-bar.png');
-        this.load.image('loader-bg', 'img/loading/loader-bg.png');
+        this.load.image('loader-bar', 'resources/images/loading/loader-bar.png');
+        this.load.image('loader-bg', 'resources/images/loading/loader-bg.png');
     }
 
     create() {
