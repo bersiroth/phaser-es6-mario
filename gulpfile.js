@@ -71,18 +71,23 @@ gulp.task('htmls', function() {
 });
 
 gulp.task('maps', function() {
-    return gulp.src('./src/maps/**/*')
-        .pipe(gulp.dest('./' + conf.target + '/map/'))
+    return gulp.src('./src/resources/maps/**/*')
+        .pipe(gulp.dest('./' + conf.target + '/resources/maps/'))
 });
 
 gulp.task('sounds', function() {
-    return gulp.src('./src/sound/**/*')
-        .pipe(gulp.dest('./' + conf.target + '/sound/'))
+    return gulp.src('./src/resources/sounds/**/*')
+        .pipe(gulp.dest('./' + conf.target + '/resources/sounds/'))
 });
 
 gulp.task('images', function() {
-    return gulp.src('./src/img/**/*')
-        .pipe(gulp.dest('./' + conf.target + '/img/'))
+    return gulp.src('./src/resources/images/**/*')
+        .pipe(gulp.dest('./' + conf.target + '/resources/images/'))
+});
+
+gulp.task('fonts', function() {
+    return gulp.src('./src/resources/fonts/**/*')
+        .pipe(gulp.dest('./' + conf.target + '/resources/fonts/'))
 });
 
 gulp.task('styles', function() {
@@ -144,7 +149,7 @@ gulp.task('clean', function(){
 });
 
 gulp.task('build', function(callback){
-    runSequence('clean', 'vendor', 'babelify', 'styles', 'images', 'sounds', 'maps', 'htmls', 'inject', callback);
+    runSequence('clean', 'vendor', 'babelify', 'styles', 'fonts', 'images', 'sounds', 'maps', 'htmls', 'inject', callback);
 });
 
 
@@ -203,53 +208,22 @@ gulp.task('server-prod-debug', ['prod-conf-debug', 'server-start']);
 
 
 // ====== deploy ======
-
-var conn;
-gulp.task('connection-server', function(callback) {
-    conn = ftp.create({
+gulp.task('deploy', ['build-prod'], function(callback) {
+    var conn = ftp.create({
         host:     conf.host,
         user:     conf.user,
         password: conf.password,
         parallel: 1,
     })
-    callback();
-});
 
-gulp.task('clean-server', ['connection-server'], function(callback) {
-    var globs = [
-        'sound/level',
-        'sound',
-        'img/controller',
-        'img',
-        'js',
-        'map',
-        'css',
-    ];
-
-    var count = 0;
-    globs.forEach(function(path){
-        conn.rmdir(conf.base + '/' + path, function(err){
-            if(err) {
-                callback(err);
-                console.log(conf.base + '/' + path);
-            }
-            count++;
-        });
-    });
-
-    setTimeout(function () {
-        if(count == globs.length){
-            callback();
+    conn.rmdir(conf.base, function(err){
+        if(err) {
+            callback(err);
+            console.log(conf.base );
         }
-    }, 5000);
-})
+        gulp.src('./' + conf.target + '/**')
+            .pipe(conn.dest(conf.base));
 
-gulp.task('push-server', ['connection-server'], function() {
-    return gulp.src('./' + conf.target + '/**')
-        .pipe(conn.dest(conf.base));
-
-});
-
-gulp.task('deploy', function(callback) {
-    runSequence(['build-prod', 'clean-server'], 'push-server', callback);
+        callback();
+    });
 });
