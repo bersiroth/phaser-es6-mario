@@ -208,6 +208,7 @@ gulp.task('server-prod-debug', ['prod-conf-debug', 'server-start']);
 
 
 // ====== deploy ======
+
 gulp.task('deploy', ['build-prod'], function(callback) {
     var conn = ftp.create({
         host:     conf.host,
@@ -227,3 +228,5 @@ gulp.task('deploy', ['build-prod'], function(callback) {
         callback();
     });
 });
+
+//TODO prod or dev env in arg with yargs
