@@ -177,10 +177,10 @@ gulp.task('server', ['server-start'], function() {
     gulp.watch('./src/**/*.css', function() {
         runSequence('styles', 'inject', 'server-reload');
     });
-    gulp.watch('./src/maps/**/*', function() {
+    gulp.watch('./src/resources/maps/**/*', function() {
         runSequence('maps', 'server-reload');
     });
-    gulp.watch('./src/img/**/*', function() {
+    gulp.watch('./src/resources/images/**/*', function() {
         runSequence('images', 'server-reload');
     });
 });
