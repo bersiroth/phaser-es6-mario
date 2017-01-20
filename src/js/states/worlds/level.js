@@ -13,7 +13,7 @@ export default class Level extends Phaser.State {
         this.game.stage.backgroundColor = '#6f85ff';
 
         // this.player = this.game.add.sprite(32, 200, 'mario');
-        this.player = new Player(this.game, 32, 200, 'mario', 1);
+        this.player = new Player(this.game, 32, 200, 'mario-small', 1);
         this.game.world.addChild(this.player);
 
         this.die = this.game.add.audio('die');
