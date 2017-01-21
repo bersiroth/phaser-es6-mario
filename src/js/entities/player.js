@@ -93,7 +93,7 @@ export default class Player extends Phaser.Sprite {
             this.body.velocity.y = Const.SMALL_JUMP_SPEED;
             this.jumptimer = 1;
             this.canJump = false;
-            // this.game.state.getCurrentState().jump.play();
+            this.game.state.getCurrentState().jump.play();
         } else if (this.cursors.up.isDown && (this.jumptimer != 0)) {
             if (this.jumptimer > Const.MAX_JUMP_TIMER) {
                 this.jumptimer = 0;
