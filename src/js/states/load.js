@@ -36,8 +36,10 @@ export class Load extends Phaser.State {
         this.load.audio('bump', 'resources/sounds/smb_bump.wav');
         this.load.audio('coin', 'resources/sounds/smb_coin.wav');
         this.load.audio('jump-small', 'resources/sounds/smb_jumpsmall.wav');
+        this.load.audio('jump', 'resources/sounds/smb_jump-super.wav');
         this.load.audio('die', 'resources/sounds/smb_mariodie.wav');
         this.load.audio('powerup-appears', 'resources/sounds/smb_powerup_appears.wav');
+        this.load.audio('powerup', 'resources/sounds/smb_powerup.wav');
         this.load.audio('stomp', 'resources/sounds/smb_stomp.wav');
 
         // font resources

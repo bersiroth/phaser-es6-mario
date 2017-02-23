@@ -16,7 +16,6 @@ export default class Player extends Entity {
         this.body.drag.set(Const.DRAG,0);
         this.body.collideWorldBounds = false;
         this.body.maxVelocity.set(Const.MAX_SPEED, 80);
-        console.log(this.body.width)
         this.body.setSize(this.body.width-8,this.body.height, 5, 0);
         this.anchor.setTo(.5,.5);
         this.scale.x = 1;
@@ -26,6 +25,7 @@ export default class Player extends Entity {
 
         this.die = this.game.add.audio('die');
         this.jump = this.game.add.audio('jump-small');
+        this.powerup = this.game.add.audio('powerup');
         this.jump.volume = 0.3;
     }
 
@@ -58,6 +58,8 @@ export default class Player extends Entity {
     up() {
         this.loadTexture('mario-big', 0, false);
         this.body.setSize(this.body.width ,this.body.height * 2);
+        this.jump = this.game.add.audio('jump');
+        this.powerup.play();
     }
 
     render() {}

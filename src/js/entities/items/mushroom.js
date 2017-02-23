@@ -8,9 +8,12 @@ export default class Mushroom extends Item {
 
     constructor(game, x, y, key, frame) {
         super(game, x, y, key, frame);
+        this.appear = this.game.add.audio('powerup-appears');
     }
 
     tween(){
+        this.appear.play();
+
         let itemSpawn = this.game.add.tween(this).to({
             y: this.body.y - 15
         }, 400, null, true, 0, 0, false);
