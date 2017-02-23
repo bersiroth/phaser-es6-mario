@@ -20,7 +20,7 @@ export default class Mushroom extends Item {
 
         itemSpawn.onComplete.add(function() {
             this.body.allowGravity = true;
-            this.body.velocity.x = 50;
+            this.body.velocity.x = 40;
         }, this);
     }
 
