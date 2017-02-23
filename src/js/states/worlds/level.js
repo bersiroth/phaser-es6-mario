@@ -8,16 +8,23 @@ export default class Level extends Phaser.State {
     }
 
     create() {
+        this.game.time.advancedTiming = true;
+
+        this.coins      = this.game.add.group(this.game.world, 'coins');
+        this.bricks     = this.game.add.group(this.game.world, 'bricks');
+        this.itemblocs  = this.game.add.group(this.game.world, 'itemblocs');
+        this.mushroom   = this.game.add.group(this.game.world, 'mushroom');
+
+        this.bump = this.game.add.audio('bump');
+        this.bump.volume = 0.7;
+
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.physics.arcade.gravity.y = Const.GRAVITY;
         this.game.stage.backgroundColor = '#6f85ff';
 
         this.player = new Player(this.game, 32, 200, 'mario-small', 1);
+        // this.player = new Player(this.game, 225, 200, 'mario-smasll', 1);
         this.game.world.addChild(this.player);
-
-        this.die = this.game.add.audio('die');
-        this.jump = this.game.add.audio('jump-small');
-        this.jump.volume = 0.3;
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
 
@@ -152,13 +159,23 @@ export default class Level extends Phaser.State {
     }
 
     render() {
+        // this.game.debug.body(this.player, 32, 32);
+        // this.game.debug.spriteInfo(this.player, 16, 16);
+    }
+
+    preRender() {
+
+        this.game.world.bringToTop(this.mushroom);
+        this.game.world.bringToTop(this.itemblocs);
+        this.game.world.bringToTop(this.player);
     }
 
     update() {
+        this.game.world.bringToTop(this);
 
         if(!this.player.inCamera){
             this.music.stop();
-            this.die.play();
+            this.player.die.play();
             this.game.state.start('Menu');
         }
 

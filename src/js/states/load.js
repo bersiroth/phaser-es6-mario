@@ -46,6 +46,7 @@ export class Load extends Phaser.State {
 
     create() {
         this.state.start('Menu');
+        // this.state.start('World1-Level1');
     }
 
 }

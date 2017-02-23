@@ -1,17 +1,15 @@
 /**
  * Created by bernard on 14/01/17.
  */
+import Bloc from "./bloc";
 
-export default class Item extends Phaser.Sprite {
+export default class Item extends Bloc {
 
     constructor(game, x, y, key, frame, item) {
         super(game, x, y, key, frame);
 
         this.animations.add('spin', [24, 25, 26], 4, true);
         this.animations.play('spin');
-        game.physics.arcade.enable(this);
-        this.body.allowGravity = false;
-        this.body.immovable = true;
 
         this.item = item;
     }

@@ -2,8 +2,9 @@
  * Created by bernard on 14/01/17.
  */
 import Const from 'const';
+import Entity from "./entity";
 
-export default class Player extends Phaser.Sprite {
+export default class Player extends Entity {
 
     constructor(game, x, y, key, frame) {
         super(game, x, y, key, frame);
@@ -15,15 +16,39 @@ export default class Player extends Phaser.Sprite {
         this.body.drag.set(Const.DRAG,0);
         this.body.collideWorldBounds = false;
         this.body.maxVelocity.set(Const.MAX_SPEED, 80);
+        console.log(this.body.width)
+        this.body.setSize(this.body.width-8,this.body.height, 5, 0);
         this.anchor.setTo(.5,.5);
-        this.body.setSize(this.body.width,this.body.height);
         this.scale.x = 1;
         this.canJump = true;
 
         this.cursors = game.input.keyboard.createCursorKeys();
+
+        this.die = this.game.add.audio('die');
+        this.jump = this.game.add.audio('jump-small');
+        this.jump.volume = 0.3;
     }
 
     update() {
+        this.game.physics.arcade.collide(this, this.itemblocs, function(player, itemblocs){
+            if(this.body.touching.up && itemblocs.body.touching.down && itemblocs.frame != 27){
+                this.jumptimer = 0;
+                itemblocs.collide();
+            }
+        }, null, this);
+
+        this.game.physics.arcade.overlap(this, this.mushroom, function(player, mushroom){
+            mushroom.destroy();
+            player.up();
+        }, null, this);
+
+        this.game.physics.arcade.collide(this, this.bricks, function(player, brick){
+            if(player.body.touching.up && brick.body.touching.down){
+                this.jumptimer = 0;
+                brick.collide();
+            }
+        }, null, this);
+
         this._run();
         this._move();
         this._jump();
@@ -32,8 +57,10 @@ export default class Player extends Phaser.Sprite {
 
     up() {
         this.loadTexture('mario-big', 0, false);
-        this.body.setSize(this.body.width +1 ,this.body.height * 2);
+        this.body.setSize(this.body.width ,this.body.height * 2);
     }
+
+    render() {}
 
     _run() {
         this.animations.currentAnim.delay = Math.min(200, 10000/Math.abs(this.body.velocity.x));
@@ -93,7 +120,7 @@ export default class Player extends Phaser.Sprite {
             this.body.velocity.y = Const.SMALL_JUMP_SPEED;
             this.jumptimer = 1;
             this.canJump = false;
-            this.game.state.getCurrentState().jump.play();
+            this.jump.play();
         } else if (this.cursors.up.isDown && (this.jumptimer != 0)) {
             if (this.jumptimer > Const.MAX_JUMP_TIMER) {
                 this.jumptimer = 0;
@@ -103,9 +130,10 @@ export default class Player extends Phaser.Sprite {
             }
         } else if (this.jumptimer != 0) {
             this.jumptimer = 0;
+            this.body.velocity.y = 0;
         }
 
-        if(this.body.touching.up && !this.body.onFloor()){
+        if(this.body.touching.up){
             this.jumptimer = 0;
         }
     }
