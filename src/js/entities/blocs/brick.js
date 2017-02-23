@@ -15,10 +15,8 @@ export default class Brick extends Bloc {
                 y: this.body.y - 5
             }, 75, null, true, 0, 0, true
         ).onUpdateCallback(function(){
-            console.log('time')
             this.game.physics.arcade.overlap(this, this.mushroom, function(brick, mushroom){
                 mushroom.bump();
-                console.log('ok');
             }, null, this);
         }, this);
     }
