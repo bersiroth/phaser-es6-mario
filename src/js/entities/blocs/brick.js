@@ -19,5 +19,7 @@ export default class Brick extends Bloc {
                 mushroom.bump();
             }, null, this);
         }, this);
+        
+        this.bump.play();
     }
 }

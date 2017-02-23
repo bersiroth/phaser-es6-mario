@@ -28,6 +28,7 @@ export class Level1 extends Level {
         this.layer.wrap = true;
 
         this.music = this.game.add.audio('level-1');
+        this.music.volume = 0.8;
         this.music.play();
 
     }

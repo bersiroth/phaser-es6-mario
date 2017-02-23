@@ -31,7 +31,7 @@ export default class Player extends Entity {
 
     update() {
         this.game.physics.arcade.collide(this, this.itemblocs, function(player, itemblocs){
-            if(this.body.touching.up && itemblocs.body.touching.down && itemblocs.frame != 27){
+            if(this.body.touching.up && itemblocs.body.touching.down){
                 this.jumptimer = 0;
                 itemblocs.collide();
             }

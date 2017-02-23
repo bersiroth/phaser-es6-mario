@@ -12,6 +12,9 @@ export default class Bloc extends Entity {
         game.physics.arcade.enable(this);
         this.body.allowGravity = false;
         this.body.immovable = true;
+
+        this.bump = this.game.add.audio('bump');;
+        this.bump.volume = 0.8;
     }
 
     tween() {}

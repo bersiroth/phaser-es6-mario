@@ -15,13 +15,17 @@ export default class Item extends Bloc {
     }
 
     collide() {
-        this.animations.stop();
-        this.frame = 27;
+        if (this.frame != 27) {
+            this.animations.stop();
+            this.frame = 27;
 
-        this.item.tween();
+            this.item.tween();
 
-        this.game.add.tween(this).to({
-            y: this.body.y - 5
-        }, 125, null, true, 0, 0, true);
+            this.game.add.tween(this).to({
+                y: this.body.y - 5
+            }, 125, null, true, 0, 0, true);
+        } else {
+            this.bump.play();
+        }
     }
 }
