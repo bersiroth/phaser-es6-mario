@@ -10,16 +10,21 @@ export default class Brick extends Bloc {
         super(game, x, y, key, frame);
     }
 
-    collide() {
-        this.game.add.tween(this).to({
-                y: this.body.y - 5
-            }, 75, null, true, 0, 0, true
-        ).onUpdateCallback(function(){
-            this.game.physics.arcade.overlap(this, this.mushroom, function(brick, mushroom){
-                mushroom.bump();
-            }, null, this);
-        }, this);
-        
-        this.bump.play();
+    collide(power) {
+        if(power == false) {
+            this.game.add.tween(this).to({
+                    y: this.body.y - 5
+                }, 75, null, true, 0, 0, true
+            ).onUpdateCallback(function(){
+                this.game.physics.arcade.overlap(this, this.mushroom, function(brick, mushroom){
+                    mushroom.bump();
+                }, null, this);
+            }, this);
+
+            this.bump.play();
+        } else {
+            this.destroy();
+        }
+
     }
 }

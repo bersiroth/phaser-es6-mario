@@ -20,6 +20,7 @@ export default class Player extends Entity {
         this.anchor.setTo(.5,.5);
         this.scale.x = 1;
         this.canJump = true;
+        this.power = false;
 
         this.cursors = game.input.keyboard.createCursorKeys();
 
@@ -45,7 +46,7 @@ export default class Player extends Entity {
         this.game.physics.arcade.collide(this, this.bricks, function(player, brick){
             if(player.body.touching.up && brick.body.touching.down){
                 this.jumptimer = 0;
-                brick.collide();
+                brick.collide(this.power);
             }
         }, null, this);
 
@@ -60,6 +61,7 @@ export default class Player extends Entity {
         this.body.setSize(this.body.width ,this.body.height * 2);
         this.jump = this.game.add.audio('jump');
         this.powerup.play();
+        this.power = true;
     }
 
     render() {}
