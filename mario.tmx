@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-up" width="213" height="25" tilewidth="16" tileheight="16" nextobjectid="88">
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="213" height="25" tilewidth="16" tileheight="16" nextobjectid="93">
  <tileset firstgid="1" name="world" tilewidth="16" tileheight="16" tilecount="924" columns="33">
   <image source="src/resources/images/world.png" width="528" height="448"/>
  </tileset>
  <tileset firstgid="925" name="item" tilewidth="16" tileheight="16" tilecount="756" columns="36">
   <image source="src/resources/images/item.png" width="576" height="336"/>
  </tileset>
- <layer name="world-1" width="213" height="25" visible="0">
+ <layer name="world-1" width="213" height="25">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -40,15 +40,15 @@
   <object id="19" gid="1198" x="368" y="96" width="16" height="16"/>
   <object id="20" gid="1198" x="272" y="160" width="16" height="16"/>
   <object id="38" gid="925" x="352" y="160" width="16" height="16"/>
-  <object id="41" gid="1180" x="1248" y="160" width="16" height="16"/>
   <object id="80" gid="1180" x="1504" y="96" width="16" height="16"/>
   <object id="81" gid="1180" x="1792" y="160" width="16" height="16"/>
   <object id="82" gid="1180" x="1744" y="160" width="16" height="16"/>
   <object id="83" gid="1180" x="1696" y="160" width="16" height="16"/>
-  <object id="84" gid="1180" x="1744" y="96" width="16" height="16"/>
   <object id="85" gid="1180" x="2064" y="96" width="16" height="16"/>
   <object id="86" gid="1180" x="2080" y="96" width="16" height="16"/>
   <object id="87" gid="1180" x="2736" y="160" width="16" height="16"/>
+  <object id="91" gid="925" x="1248" y="160" width="16" height="16"/>
+  <object id="92" gid="925" x="1744" y="96" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="blocs">
   <object id="21" gid="2" x="336" y="160" width="16" height="16"/>

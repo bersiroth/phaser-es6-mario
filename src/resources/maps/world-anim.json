@@ -6,7 +6,7 @@
          "name":"world-1",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":213,
          "x":0,
          "y":0
@@ -67,18 +67,6 @@
                 {
                  "gid":1180,
                  "height":16,
-                 "id":41,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":1248,
-                 "y":160
-                }, 
-                {
-                 "gid":1180,
-                 "height":16,
                  "id":80,
                  "name":"",
                  "rotation":0,
@@ -127,18 +115,6 @@
                 {
                  "gid":1180,
                  "height":16,
-                 "id":84,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":1744,
-                 "y":96
-                }, 
-                {
-                 "gid":1180,
-                 "height":16,
                  "id":85,
                  "name":"",
                  "rotation":0,
@@ -171,6 +147,30 @@
                  "width":16,
                  "x":2736,
                  "y":160
+                }, 
+                {
+                 "gid":925,
+                 "height":16,
+                 "id":91,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1248,
+                 "y":160
+                }, 
+                {
+                 "gid":925,
+                 "height":16,
+                 "id":92,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1744,
+                 "y":96
                 }],
          "offsetx":0.0434783,
          "offsety":0,
@@ -565,7 +565,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":88,
+ "nextobjectid":93,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tileheight":16,
