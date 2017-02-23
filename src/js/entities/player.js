@@ -58,6 +58,7 @@ export default class Player extends Entity {
 
     up() {
         if (this.power != true) {
+            this.position.set(this.position.x, this.position.y - 16);
             this.loadTexture('mario-big', 0, false);
             this.body.setSize(this.body.width ,this.body.height * 2);
             this.jump = this.game.add.audio('jump');
