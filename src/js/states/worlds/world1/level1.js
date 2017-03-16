@@ -3,6 +3,7 @@ import Level from "states/worlds/level";
 import MushroomItem from "entities/items/mushroom";
 import CoinItem from "entities/items/coin";
 import brickBlock from "entities/blocs/brick";
+import Ennemy from "entities/ennemy";
 
 export class Level1 extends Level {
 
@@ -22,6 +23,7 @@ export class Level1 extends Level {
         this.map.createFromObjects('items', 1180, 'item', 255, true, true, this.coins, CoinItem);
         this.map.createFromObjects('blocs', 2, 'world', 2, true, true, this.bricks, brickBlock);
         this.map.createFromObjects('items', 925, 'item', 0, true, true, this.mushroom, MushroomItem);
+        this.map.createFromObjects('ennemy', 1681, 'ennemy', 50, true, true, this.ennemies, Ennemy);
 
         this.layer = this.map.createLayer('world-1');
         this.layer.resizeWorld();
@@ -39,6 +41,12 @@ export class Level1 extends Level {
         this.game.physics.arcade.collide(this.mushroom, this.layer);
         this.game.physics.arcade.collide(this.mushroom, this.bricks);
         this.game.physics.arcade.collide(this.mushroom, this.itemblocs);
+
+        this.game.physics.arcade.collide(this.ennemies, this.layer);
+        this.game.physics.arcade.collide(this.ennemies, this.bricks);
+        this.game.physics.arcade.collide(this.ennemies, this.itemblocs);
+        this.game.physics.arcade.collide(this.ennemies, this.mushroom);
+        this.game.physics.arcade.collide(this.ennemies, this.ennemies);
     }
 
     render(){

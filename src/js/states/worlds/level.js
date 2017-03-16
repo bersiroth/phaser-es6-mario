@@ -14,6 +14,7 @@ export default class Level extends Phaser.State {
         this.bricks     = this.game.add.group(this.game.world, 'bricks');
         this.itemblocs  = this.game.add.group(this.game.world, 'itemblocs');
         this.mushroom   = this.game.add.group(this.game.world, 'mushroom');
+        this.ennemies   = this.game.add.group(this.game.world, 'ennemies');
 
         this.bump = this.game.add.audio('bump');
         this.bump.volume = 0.7;
@@ -23,7 +24,6 @@ export default class Level extends Phaser.State {
         this.game.stage.backgroundColor = '#6f85ff';
 
         this.player = new Player(this.game, 32, 200, 'mario-small', 1);
-        // this.player = new Player(this.game, 225, 200, 'mario-smasll', 1);
         this.game.world.addChild(this.player);
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -167,6 +167,7 @@ export default class Level extends Phaser.State {
 
         this.game.world.bringToTop(this.mushroom);
         this.game.world.bringToTop(this.itemblocs);
+        this.game.world.bringToTop(this.ennemies);
         this.game.world.bringToTop(this.player);
     }
 
@@ -175,7 +176,7 @@ export default class Level extends Phaser.State {
 
         if(!this.player.inCamera){
             this.music.stop();
-            this.player.die.play();
+            this.player.dieSound.play();
             this.game.state.start('Menu');
         }
 
@@ -190,6 +191,15 @@ export default class Level extends Phaser.State {
             this.player.body.x = this.game.camera.x;
             this.player.body.velocity.x = 0;
         }
+
+        this.ennemies.forEach(function(ennemy){
+            if(ennemy.moved == false){
+
+                if(ennemy.body.x - this.player.body.x < Const.ENNEMY_DISTANCE_MOVE){
+                    ennemy.move();
+                }
+            }
+        }, this);
 
     }
 

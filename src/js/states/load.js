@@ -10,6 +10,7 @@ export class Load extends Phaser.State {
         this.load.tilemap('world', 'resources/maps/world-anim.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.spritesheet('world', 'resources/images/world.png', 16, 16);
         this.load.spritesheet('item', 'resources/images/item.png', 16, 16);
+        this.load.spritesheet('ennemy', 'resources/images/ennemy_sheet.png', 16, 16, 3);
         this.load.spritesheet('mario-small', 'resources/images/mario_sheet_small.png', 16, 16, 14);
         this.load.spritesheet('mario-big', 'resources/images/mario_sheet_big.png', 16, 32, 14);
 
@@ -48,7 +49,6 @@ export class Load extends Phaser.State {
 
     create() {
         this.state.start('Menu');
-        // this.state.start('World1-Level1');
     }
 
 }

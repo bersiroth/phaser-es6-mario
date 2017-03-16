@@ -17,20 +17,33 @@ export default class Player extends Entity {
         this.body.collideWorldBounds = false;
         this.body.maxVelocity.set(Const.MAX_SPEED, 80);
         this.body.setSize(this.body.width-8,this.body.height, 5, 0);
-        this.anchor.setTo(.5,.5);
+        this.anchor.setTo(.5,0);
         this.scale.x = 1;
         this.canJump = true;
         this.power = false;
 
         this.cursors = game.input.keyboard.createCursorKeys();
 
-        this.die = this.game.add.audio('die');
+        this.dieSound = this.game.add.audio('die');
         this.jump = this.game.add.audio('jump-small');
-        this.powerup = this.game.add.audio('powerup');
+        this.powerupSound = this.game.add.audio('powerup');
         this.jump.volume = 0.3;
+
+        this.invulnerable = 0;
     }
 
     update() {
+        this.game.physics.arcade.overlap(this, this.ennemies, function(player, ennemy){
+            if(ennemy.body.y - player.body.y > this.body.height * 0.6) {
+                ennemy.die();
+                player.body.velocity.y = Const.SMALL_JUMP_SPEED;
+            } else {
+                console.log(ennemy.body.y - player.body.y)
+                console.log(this.body.height * 0.6)
+                player.powerDown();
+            }
+        }, null, this);
+
         this.game.physics.arcade.collide(this, this.itemblocs, function(player, itemblocs){
             if(this.body.touching.up && itemblocs.body.touching.down){
                 this.jumptimer = 0;
@@ -40,7 +53,7 @@ export default class Player extends Entity {
 
         this.game.physics.arcade.overlap(this, this.mushroom, function(player, mushroom){
             mushroom.destroy();
-            player.up();
+            player.powerup();
         }, null, this);
 
         this.game.physics.arcade.collide(this, this.bricks, function(player, brick){
@@ -54,20 +67,47 @@ export default class Player extends Entity {
         this._move();
         this._jump();
         this._flip();
+
+        if(this.invulnerable != 0){
+            if(this.invulnerable % 2 == 0) this.alpha = (this.alpha == 1) ? 0 : 1;
+            this.invulnerable--;
+        } else {
+            this.alpha = 1;
+        }
     }
 
-    up() {
+    powerup() {
         if (this.power != true) {
             this.position.set(this.position.x, this.position.y - 16);
             this.loadTexture('mario-big', 0, false);
             this.body.setSize(this.body.width ,this.body.height * 2);
             this.jump = this.game.add.audio('jump');
-            this.powerup.play();
+            this.powerupSound.play();
             this.power = true;
         }
     }
 
+    powerDown() {
+        if(this.invulnerable == 0){
+            if (this.power == true) {
+                this.loadTexture('mario-small', 0, false);
+                this.body.setSize(this.body.width ,this.body.height / 2);
+                this.jump = this.game.add.audio('jump-small');
+                // this.powerup.play();
+                this.power = false;
+                this.invulnerable = Const.INVULNERABLE_TIME;
+            } else {
+                this.die();
+            }
+        }
+    }
+
     render() {}
+
+    die() {
+        this.dieSound.play();
+        this.game.state.restart();
+    }
 
     _run() {
         this.animations.currentAnim.delay = Math.min(200, 10000/Math.abs(this.body.velocity.x));

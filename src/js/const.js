@@ -17,5 +17,10 @@ module.exports = {
     MAX_JUMP_TIMER: 17,
     SCALE: 2,
 
+    ENNEMY_DISTANCE_MOVE: 140,
+    ENNEMY_SPEED: 40,
+
+    INVULNERABLE_TIME: 100,
+
     DEBUG_MOBILE: false
 };

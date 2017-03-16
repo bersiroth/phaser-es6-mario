@@ -11,5 +11,6 @@ export default class Entity extends Phaser.Sprite {
         this.bricks     = this.game.world.getByName('bricks');
         this.itemblocs  = this.game.world.getByName('itemblocs');
         this.mushroom   = this.game.world.getByName('mushroom');
+        this.ennemies   = this.game.world.getByName('ennemies');
     }
 }
