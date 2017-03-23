@@ -203,6 +203,10 @@ export default class Level extends Phaser.State {
 
     }
 
+    pauseUpdate() {
+        this.game.tweens.update();
+    }
+
     shutdown() {
         this.music.stop();
         this.game.world.setBounds(0, 0, this.game.width, this.game.height);
