@@ -78,12 +78,25 @@ export default class Player extends Entity {
 
     powerup() {
         if (this.power != true) {
+            this.frame = 0;
             this.position.set(this.position.x, this.position.y - 16);
-            this.loadTexture('mario-big', 0, false);
-            this.body.setSize(this.body.width ,this.body.height * 2);
-            this.jump = this.game.add.audio('jump');
-            this.powerupSound.play();
+            this.game.paused = true;
+
             this.power = true;
+            this.powerupSound.play();
+
+            let s = this.game.add.tween(this.scale);
+            s.to({
+                y: 2
+            }, 75, Phaser.Easing.Linear.None, true, 0, 2, true);
+
+            s.onComplete.add(function() {
+                this.scale.set(1 ,1);
+                this.game.paused = false;
+                this.loadTexture('mario-big', 0, false);
+                this.body.setSize(this.body.width ,this.body.height * 2);
+                this.jump = this.game.add.audio('jump');
+            }, this);
         }
     }
 
