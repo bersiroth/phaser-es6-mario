@@ -21,7 +21,7 @@ export class Level1 extends Level {
         this.map.setCollision([1, 2, 25, 34, 265, 266, 298, 299]);
         this.map.createFromObjects('items', 1198, 'item', 255, true, true, this.coins, CoinItem);
         this.map.createFromObjects('items', 1180, 'item', 255, true, true, this.coins, CoinItem);
-        this.map.createFromObjects('blocs', 2, 'world', 2, true, true, this.bricks, brickBlock);
+        this.map.createFromObjects('blocs', 2, 'world', 1, true, true, this.bricks, brickBlock);
         this.map.createFromObjects('items', 925, 'item', 0, true, true, this.mushroom, MushroomItem);
         this.map.createFromObjects('ennemy', 1681, 'ennemy', 50, true, true, this.ennemies, Ennemy);
 
@@ -45,7 +45,6 @@ export class Level1 extends Level {
         this.game.physics.arcade.collide(this.ennemies, this.layer);
         this.game.physics.arcade.collide(this.ennemies, this.bricks);
         this.game.physics.arcade.collide(this.ennemies, this.itemblocs);
-        this.game.physics.arcade.collide(this.ennemies, this.mushroom);
         this.game.physics.arcade.collide(this.ennemies, this.ennemies);
     }
 
