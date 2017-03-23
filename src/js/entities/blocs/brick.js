@@ -23,8 +23,18 @@ export default class Brick extends Bloc {
 
             this.bump.play();
         } else {
-            this.destroy();
-        }
+            this.scale.set(0.5);
+            let s = this.game.add.tween(this).to({
+                y: this.game.height,
+            }, 300, Phaser.Easing.Back.In, true, 0, 0);
 
+            this.game.add.tween(this).to({
+                x: this.body.x - 30,
+            }, 300, Phaser.Easing.Linear.InOut, true, 0, 0);
+
+            s.onComplete.add(function() {
+                this.destroy();
+            }, this);
+        }
     }
 }
