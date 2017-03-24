@@ -40,5 +40,7 @@ export default class Ennemy extends Entity {
         this.game.time.events.add(200, function(){
             this.destroy();
         }, this);
+
+        this.game.score += 100;
     }
 }

@@ -38,8 +38,6 @@ export default class Player extends Entity {
                 ennemy.die();
                 player.body.velocity.y = Const.SMALL_JUMP_SPEED;
             } else {
-                console.log(ennemy.body.y - player.body.y)
-                console.log(this.body.height * 0.6)
                 player.powerDown();
             }
         }, null, this);
@@ -54,6 +52,8 @@ export default class Player extends Entity {
         this.game.physics.arcade.overlap(this, this.mushroom, function(player, mushroom){
             mushroom.destroy();
             player.powerup();
+
+            this.game.score += 1000;
         }, null, this);
 
         this.game.physics.arcade.collide(this, this.bricks, function(player, brick){

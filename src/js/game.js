@@ -9,6 +9,10 @@ export class Game extends Phaser.Game {
         super(Const.GAME_WIDTH, Const.GAME_HEIGHT, Phaser.AUTO, id, null);
         this.worlds = ['world1']
         this._addStates();
+
+        this.score = 0;
+        this.coins = 0;
+        this.timer = 400;
     }
 
     _addStates() {

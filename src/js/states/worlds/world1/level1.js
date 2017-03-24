@@ -51,7 +51,7 @@ export class Level1 extends Level {
     render(){
         super.render();
 
-        this.game.debug.text(this.game.time.fps || "--", 2, 14, "#00ff00");
+        // this.game.debug.text(this.game.time.fps || "--", 2, 14, "#00ff00");
     }
 
 }

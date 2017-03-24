@@ -19,6 +19,8 @@ export default class Coin extends Item {
         this.game.add.tween(this).to({
             y: this.body.y - 50
         }, 200, null, true, 0, 0, true);
+
+        this.game.score += 200;
     }
 
 
