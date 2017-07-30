@@ -54,8 +54,7 @@ export default class Level extends Phaser.State {
     update() {
         if(!this.player.inCamera){
             this.music.stop();
-            this.player.dieSound.play();
-            this.game.state.start('Menu');
+            this.player.die();
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);

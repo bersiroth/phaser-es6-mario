@@ -83,6 +83,8 @@ export default class Player extends Entity {
             this.game.paused = true;
 
             this.power = true;
+            this.game.sound.pauseAll();
+            this.game.sound.unsetMute();
             this.powerupSound.play();
 
             let s = this.game.add.tween(this.scale);
@@ -93,6 +95,7 @@ export default class Player extends Entity {
             s.onComplete.add(function() {
                 this.scale.set(1 ,1);
                 this.game.paused = false;
+                this.game.sound.resumeAll();
                 this.loadTexture('mario-big', 0, false);
                 this.body.setSize(this.body.width ,this.body.height * 2);
                 this.jump = this.game.add.audio('jump');
@@ -115,11 +118,23 @@ export default class Player extends Entity {
         }
     }
 
-    render() {}
-
     die() {
+        this.game.paused = true;
+        this.game.sound.pauseAll();
+        this.game.sound.unsetMute();
         this.dieSound.play();
-        this.game.state.restart();
+        this.dieSound.onStop.add(() => {
+            this.game.paused = false;
+            this.game.life -= 1;
+
+            if (this.game.life == 0) {
+                this.game.life = 3;
+                this.game.score = 0;
+                this.game.state.start('Menu');
+            } else {
+                this.game.state.restart();
+            }
+        });
     }
 
     _run() {
