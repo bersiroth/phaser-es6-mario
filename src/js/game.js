@@ -15,6 +15,8 @@ export class Game extends Phaser.Game {
         this.timer = 400;
 
         this.life = 3;
+
+        this.spawn = 0;
     }
 
     _addStates() {

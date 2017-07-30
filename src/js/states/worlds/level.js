@@ -17,6 +17,7 @@ export default class Level extends Phaser.State {
         this.itemblocs  = this.game.add.group(this.game.world, 'itemblocs');
         this.mushroom   = this.game.add.group(this.game.world, 'mushroom');
         this.ennemies   = this.game.add.group(this.game.world, 'ennemies');
+        this.spawns     = this.game.add.physicsGroup(Phaser.Physics.ARCADE,this.game.world, 'spawns');
 
         this.bump = this.game.add.audio('bump');
         this.bump.volume = 0.7;
@@ -27,7 +28,7 @@ export default class Level extends Phaser.State {
 
         this.hud = new Hud(this.game, this);
 
-        this.player = new Player(this.game, 32, 200, 'mario-small', 1);
+        this.player = new Player(this.game, 0, 0, 'mario-small', 1);
         this.game.world.addChild(this.player);
 
         if(!this.game.device.desktop || Const.DEBUG_MOBILE) {
@@ -38,6 +39,7 @@ export default class Level extends Phaser.State {
     render() {
         // this.game.debug.body(this.player, 32, 32);
         // this.game.debug.spriteInfo(this.player, 16, 16);
+        // this.spawns.forEach(spawn => this.game.debug.body(spawn ));
     }
 
     preRender() {
@@ -52,12 +54,15 @@ export default class Level extends Phaser.State {
     }
 
     update() {
-        if(!this.player.inCamera){
+        if(!this.player.inWorld){
             this.music.stop();
             this.player.die();
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
+        this.game.physics.arcade.overlap(this.player, this.spawns, (player, spawn) => {
+            this.game.spawn = this.spawns.getIndex(spawn);
+        });
 
         if(this.game.camera.x < this.player.body.x-(Const.BLOCK_HEIGHT*7)){
             this.game.camera.x = this.player.body.x-(Const.BLOCK_HEIGHT*7);

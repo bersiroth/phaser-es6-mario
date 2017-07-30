@@ -24,6 +24,15 @@ export class Level1 extends Level {
         this.map.createFromObjects('blocs', 2, 'world', 1, true, true, this.bricks, brickBlock);
         this.map.createFromObjects('items', 925, 'item', 0, true, true, this.mushroom, MushroomItem);
         this.map.createFromObjects('ennemy', 1681, 'ennemy', 50, true, true, this.ennemies, Ennemy);
+        this.map.createFromObjects('spawn', 'spawn', null, 0, true, true, this.spawns, undefined, false);
+
+        this.spawns.forEach(spawn => {
+            spawn.body.immovable = true;
+            spawn.body.allowGravity = false;
+        });
+
+        this.player.x = this.spawns.getAt(this.game.spawn).x;
+        this.player.y = this.spawns.getAt(this.game.spawn).height - this.player.height - 10;
 
         this.layer = this.map.createLayer('world-1');
         this.layer.resizeWorld();
@@ -32,12 +41,10 @@ export class Level1 extends Level {
         this.music = this.game.add.audio('level-1');
         this.music.volume = 0.8;
         this.music.play();
-
     }
 
     update() {
         super.update();
-
         this.game.physics.arcade.collide(this.mushroom, this.layer);
         this.game.physics.arcade.collide(this.mushroom, this.bricks);
         this.game.physics.arcade.collide(this.mushroom, this.itemblocs);
@@ -50,8 +57,7 @@ export class Level1 extends Level {
 
     render(){
         super.render();
-
-        // this.game.debug.text(this.game.time.fps || "--", 2, 14, "#00ff00");
+        this.game.debug.text(this.game.time.fps || "--", 2, 14, "#00ff00");
     }
 
 }

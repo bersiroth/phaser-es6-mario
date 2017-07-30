@@ -130,6 +130,7 @@ export default class Player extends Entity {
             if (this.game.life == 0) {
                 this.game.life = 3;
                 this.game.score = 0;
+                this.game.spawn = 0;
                 this.game.state.start('Menu');
             } else {
                 this.game.state.restart();
