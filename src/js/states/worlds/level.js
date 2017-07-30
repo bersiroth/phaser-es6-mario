@@ -1,6 +1,6 @@
 import Const from "const";
 import Player from "entities/player";
-// import Hub from "entities/hub";
+import Hud from "interfaces/hud";
 
 export default class Level extends Phaser.State {
 
@@ -24,31 +24,10 @@ export default class Level extends Phaser.State {
         this.game.physics.arcade.gravity.y = Const.GRAVITY;
         this.game.stage.backgroundColor = '#6f85ff';
 
+        this.hud = new Hud(this.game, this);
+
         this.player = new Player(this.game, 32, 200, 'mario-small', 1);
         this.game.world.addChild(this.player);
-
-        this.hud = this.game.add.group(this.game.world, 'hub');
-
-        this.scoreText = this.add.bitmapText(20, 10, 'plumber_bros', 'MARIO', 8);
-        this.scoreData = this.add.bitmapText(20, 20, 'plumber_bros', this.game.score, 8);
-
-        this.coinsLogo = this.add.sprite(83, 20, 'coin', 0);
-        this.coinsLogo.animations.add('spin', [0, 1, 2], 4, true);
-        this.coinsLogo.animations.play('spin');
-        this.coinsData = this.add.bitmapText(90, 20, 'plumber_bros', 'x' + this.game.coins, 8);
-
-        this.wordlText = this.add.bitmapText(120, 10, 'plumber_bros', 'WORLD', 8);
-        this.worldData = this.add.bitmapText(125, 20, 'plumber_bros', '1-1', 8);
-
-        this.timeText = this.add.bitmapText(180, 10, 'plumber_bros', 'TIME', 8);
-        this.timeData = this.add.bitmapText(187, 20, 'plumber_bros', this.game.time, 8);
-
-        this.game.time.events.loop(1000, function(){
-            this.game.timer -= 1;
-        }, this);
-
-        this.hud.addMultiple([this.coinsLogo, this.scoreText, this.scoreData, this.coinsData, this.wordlText, this.worldData, this.timeText, this.timeData]);
-        this.hud.fixedToCamera = true;
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
 
@@ -182,13 +161,14 @@ export default class Level extends Phaser.State {
         }
     }
 
+
+
     render() {
         // this.game.debug.body(this.player, 32, 32);
         // this.game.debug.spriteInfo(this.player, 16, 16);
     }
 
     preRender() {
-
         this.game.world.bringToTop(this.mushroom);
         this.game.world.bringToTop(this.itemblocs);
         this.game.world.bringToTop(this.ennemies);
@@ -225,9 +205,7 @@ export default class Level extends Phaser.State {
             }
         }, this);
 
-        this.scoreData.text = ('000000' + this.game.score).slice(-6);
-        this.coinsData.text = 'x' + this.game.coins;
-        this.timeData.text  = this.game.timer;
+        this.hud.update();
     }
 
     pauseUpdate() {
