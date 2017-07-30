@@ -13,6 +13,8 @@ export class Game extends Phaser.Game {
         this.score = 0;
         this.coins = 0;
         this.timer = 400;
+
+        this.life = 3;
     }
 
     _addStates() {
