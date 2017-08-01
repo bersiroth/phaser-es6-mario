@@ -12,6 +12,7 @@ export class Load extends Phaser.State {
         this.load.spritesheet('item', 'resources/images/item.png', 16, 16);
         this.load.spritesheet('coin', 'resources/images/coin.png', 8, 8);
         this.load.spritesheet('ennemy', 'resources/images/ennemy_sheet.png', 16, 16, 3);
+        this.load.spritesheet('koopa', 'resources/images/koopa_sheet.png', 16, 24, 6);
         this.load.spritesheet('mario-small', 'resources/images/mario_sheet_small.png', 16, 16, 14);
         this.load.spritesheet('mario-big', 'resources/images/mario_sheet_big.png', 16, 32, 14);
 

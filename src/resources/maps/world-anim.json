@@ -759,6 +759,30 @@
                  "width":16,
                  "x":2824,
                  "y":208
+                }, 
+                {
+                 "gid":1685,
+                 "height":24,
+                 "id":126,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1712,
+                 "y":208
+                }, 
+                {
+                 "gid":1685,
+                 "height":24,
+                 "id":127,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":176,
+                 "y":208
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -801,7 +825,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":126,
+ "nextobjectid":131,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tileheight":16,
@@ -843,6 +867,19 @@
          "spacing":0,
          "tilecount":3,
          "tileheight":16,
+         "tilewidth":16
+        }, 
+        {
+         "columns":6,
+         "firstgid":1684,
+         "image":"..\/images\/koopa_sheet.png",
+         "imageheight":24,
+         "imagewidth":96,
+         "margin":0,
+         "name":"koopa_sheet",
+         "spacing":0,
+         "tilecount":6,
+         "tileheight":24,
          "tilewidth":16
         }],
  "tilewidth":16,

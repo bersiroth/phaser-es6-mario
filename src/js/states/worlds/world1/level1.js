@@ -4,6 +4,7 @@ import MushroomItem from "entities/items/mushroom";
 import CoinItem from "entities/items/coin";
 import brickBlock from "entities/blocs/brick";
 import Ennemy from "entities/ennemy";
+import Koopa from "entities/koopa";
 
 export class Level1 extends Level {
 
@@ -24,6 +25,7 @@ export class Level1 extends Level {
         this.map.createFromObjects('blocs', 2, 'world', 1, true, true, this.bricks, brickBlock);
         this.map.createFromObjects('items', 925, 'item', 0, true, true, this.mushroom, MushroomItem);
         this.map.createFromObjects('ennemy', 1681, 'ennemy', 50, true, true, this.ennemies, Ennemy);
+        this.map.createFromObjects('ennemy', 1685, 'koopa', 50, true, true, this.ennemies, Koopa);
         this.map.createFromObjects('spawn', 'spawn', null, 0, true, true, this.spawns, undefined, false);
 
         this.spawns.forEach(spawn => {
