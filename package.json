@@ -29,6 +29,9 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "phaser": "^2.6.2"
+    "express": "^4.15.4",
+    "phaser": "^2.6.2",
+    "socket.io": "^2.0.3",
+    "socket.io-client": "^2.0.3"
   }
 }

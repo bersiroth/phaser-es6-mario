@@ -135,10 +135,17 @@ gulp.task('babelify', function () {
 
 gulp.task('vendor', function () {
     if (conf.env == 'dev') {
-        var src =  gulp.src(['./node_modules/phaser/build/phaser.js','./node_modules/phaser/build/phaser.map']);
+        var src =  gulp.src([
+            './node_modules/phaser/build/phaser.js',
+            './node_modules/phaser/build/phaser.map',
+            './node_modules/socket.io-client/dist/socket.io.js',
+        ]);
         var dest = gulp.dest('./' + conf.target + '/vendor/');
     } else {
-        var src =  gulp.src(['./node_modules/phaser/build/phaser.min.js']);
+        var src =  gulp.src([
+            './node_modules/phaser/build/phaser.min.js',
+            './node_modules/socket.io-client/dist/socket.io.js',
+        ]);
         var dest = gulp.dest('./' + conf.target + '/js');
     }
     return  src.pipe(dest);
