@@ -60,6 +60,10 @@ export class Multi extends Phaser.State {
             this.game.network.rooms.forEach((room, index) => {
                 this.rooms[index].text = 'server ' + (index + 1) + ' : ' + room.length + ' / 2';
                 this.rooms[index].visible = true;
+                if(room.length == 2) {
+                    this.rooms[index].tint = 0x9E9E9E
+                    this.rooms[index].inputEnabled = false;
+                }
             });
 
         }
