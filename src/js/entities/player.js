@@ -33,6 +33,15 @@ export default class Player extends Entity {
     }
 
     update() {
+        if(this.game.network.socket != undefined) {
+            this.game.network.socket.emit('updatePlayer', {
+                'x' : this.position.x,
+                'y' : this.position.y,
+                'frame' : this.frame,
+                'face' : this.scale.x
+            });
+        }
+
         this.game.physics.arcade.overlap(this, this.ennemies, function(player, ennemy){
             if(ennemy.body.y - player.body.y > this.body.height * 0.6) {
                 ennemy.die();

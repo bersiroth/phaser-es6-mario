@@ -1,5 +1,6 @@
 import Const from "const";
 import Player from "entities/player";
+import Player2 from "entities/player2";
 import Hud from "interfaces/hud";
 import MobileController from "interfaces/mobileController";
 
@@ -31,6 +32,16 @@ export default class Level extends Phaser.State {
         this.player = new Player(this.game, 0, 0, 'mario-small', 1);
         this.game.world.addChild(this.player);
 
+        if(this.game.network.socket != undefined) {
+            this.player2 = new Player2(this.game, 0, 0, 'luigi-small', 1);
+            this.game.world.addChild(this.player2);
+            this.game.network.socket.on('updatePlayer', (data) => {
+                this.player2.position.set(data.x, data.y);
+                this.player2.frame = data.frame;
+                this.player2.scale.x = data.face;
+            });
+        }
+
         if(!this.game.device.desktop || Const.DEBUG_MOBILE) {
             this.mobileController = new MobileController(this.game, this, this.player);
         }
@@ -48,6 +59,10 @@ export default class Level extends Phaser.State {
         this.game.world.bringToTop(this.ennemies);
         this.game.world.bringToTop(this.player);
 
+        if(this.game.network.socket != undefined) {
+            this.game.world.bringToTop(this.player2);
+        }
+
         if(!this.game.device.desktop || Const.DEBUG_MOBILE) {
             this.game.world.bringToTop(this.mobileController.controller);
         }
@@ -60,6 +75,11 @@ export default class Level extends Phaser.State {
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
+
+        if(this.game.network.socket != undefined) {
+            this.game.physics.arcade.collide(this.player2, this.layer);
+        }
+
         this.game.physics.arcade.overlap(this.player, this.spawns, (player, spawn) => {
             this.game.spawn = this.spawns.getIndex(spawn);
         });

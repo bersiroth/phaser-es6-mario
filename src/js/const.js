@@ -15,7 +15,7 @@ module.exports = {
     ACCE: 120,
     SMALL_JUMP_SPEED: -150,
     MAX_JUMP_TIMER: 17,
-    SCALE: 3,
+    SCALE: 2,
 
     ENNEMY_DISTANCE_MOVE: 140,
     ENNEMY_SPEED: 40,

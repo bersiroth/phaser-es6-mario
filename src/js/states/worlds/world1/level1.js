@@ -25,7 +25,7 @@ export class Level1 extends Level {
         this.map.createFromObjects('blocs', 2, 'world', 1, true, true, this.bricks, brickBlock);
         this.map.createFromObjects('items', 925, 'item', 0, true, true, this.mushroom, MushroomItem);
         this.map.createFromObjects('ennemy', 1681, 'ennemy', 50, true, true, this.ennemies, Ennemy);
-        this.map.createFromObjects('ennemy', 1685, 'koopa', 50, true, true, this.ennemies, Koopa);
+        // this.map.createFromObjects('ennemy', 1685, 'koopa', 50, true, true, this.ennemies, Koopa);
         this.map.createFromObjects('spawn', 'spawn', null, 0, true, true, this.spawns, undefined, false);
 
         this.spawns.forEach(spawn => {
@@ -35,6 +35,11 @@ export class Level1 extends Level {
 
         this.player.x = this.spawns.getAt(this.game.spawn).x;
         this.player.y = this.spawns.getAt(this.game.spawn).height - this.player.height - 10;
+
+        if(this.game.network.socket != undefined) {
+            this.player2.x = this.spawns.getAt(this.game.spawn).x;
+            this.player2.y = this.spawns.getAt(this.game.spawn).height - this.player.height - 10;
+        }
 
         this.layer = this.map.createLayer('world-1');
         this.layer.resizeWorld();
@@ -47,6 +52,11 @@ export class Level1 extends Level {
 
     update() {
         super.update();
+
+        if(this.game.network.socket != undefined) {
+            this.game.physics.arcade.collide(this.player, this.player2);
+        }
+
         this.game.physics.arcade.collide(this.mushroom, this.layer);
         this.game.physics.arcade.collide(this.mushroom, this.bricks);
         this.game.physics.arcade.collide(this.mushroom, this.itemblocs);

@@ -1,4 +1,5 @@
 
+import network from 'networks/network';
 import * as states from 'states';
 import * as world1 from 'states/worlds/world1';
 import Const from "const";
@@ -15,8 +16,9 @@ export class Game extends Phaser.Game {
         this.timer = 400;
 
         this.life = 3;
-
         this.spawn = 0;
+
+        this.network = new network(this);
     }
 
     _addStates() {
