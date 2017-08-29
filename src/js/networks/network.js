@@ -25,6 +25,7 @@ export default class Network {
 
             this.socket.on('update', (data) => {
                 this.rooms = data.rooms;
+                this.players = data.players;
             })
         }catch(e){
             console.log(e);
@@ -32,6 +33,25 @@ export default class Network {
     }
 
     joinRoom(name) {
+        this.currentRoom = name;
         this.socket.emit('join', name);
+    }
+
+    leaveRoom(name) {
+        this.currentRoom = null;
+        this.socket.emit('leave', name);
+    }
+
+    getMyRoom() {
+        if(this.currentRoom != null) {
+            return this.rooms[this.currentRoom-1];
+        } else {
+            return false;
+        }
+    }
+
+    disconnect() {
+        this.socket.disconnect();
+        this.socket = null;
     }
 }

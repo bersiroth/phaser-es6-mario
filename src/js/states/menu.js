@@ -2,6 +2,7 @@
 export class Menu extends Phaser.State {
 
     create() {
+        this.game.stage.disableVisibilityChange = false;
         this.game.stage.backgroundColor = '#6f85ff';
 
         let nintendo = this.game.add.sprite(this.game.world.centerX, 25, 'menu');
@@ -14,6 +15,9 @@ export class Menu extends Phaser.State {
         singlePlayer.anchor.set(0.5);
         singlePlayer.inputEnabled = true;
         singlePlayer.events.onInputDown.add(() => {
+            if(this.game.network.socket != undefined) {
+                this.game.network.disconnect();
+            }
             this.state.start('World1-Level1');
         });
         singlePlayer.events.onInputOver.add((text) => {
@@ -28,7 +32,7 @@ export class Menu extends Phaser.State {
         multiplayer.inputEnabled = true;
         multiplayer.events.onInputDown.add(() => {
             this.game.network.connect();
-            this.state.start('Multi');
+            this.state.start('List');
         });
         multiplayer.events.onInputOver.add((text) => {
             text.tint = 0xFFBB00;

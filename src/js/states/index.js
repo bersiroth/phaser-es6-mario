@@ -4,5 +4,6 @@
 export {Boot} from './boot';
 export {Load} from './load';
 export {Menu} from './menu';
-export {Multi} from './multi';
+export {List} from './multiplayer/list';
+export {Waiting} from './multiplayer/waiting';
 export {ConnexionError} from './errors/connexionError';

@@ -1,7 +1,8 @@
 
-export class Multi extends Phaser.State {
+export class List extends Phaser.State {
 
     create() {
+        this.game.stage.disableVisibilityChange = true;
         this.game.stage.backgroundColor = '#6f85ff';
 
         let nintendo = this.game.add.sprite(this.game.world.centerX, 25, 'menu');
@@ -9,6 +10,10 @@ export class Multi extends Phaser.State {
 
         let text5 = this.add.bitmapText(this.game.world.centerX, 120, 'plumber_bros', 'By Bersiroth', 8);
         text5.tint = 0xf9c3be;
+
+        this.players = this.add.bitmapText(this.game.world.centerX, 142, 'plumber_bros', 'Players : 0', 8);
+        this.players.anchor.set(0.5);
+        this.players.visible = false;
 
         this.loader = this.add.sprite(this.game.world.centerX, 160, 'loader');
         this.loader.animations.add('turn');
@@ -20,14 +25,14 @@ export class Multi extends Phaser.State {
 
         this.rooms = [];
         for (var i = 0; i < 5; i++) {
-            this.rooms[i] = this.add.bitmapText(this.game.world.centerX, 145 + (i * 16), 'plumber_bros', 'testt', 8);
+            this.rooms[i] = this.add.bitmapText(this.game.world.centerX, 160 + (i * 12), 'plumber_bros', '', 8);
             this.rooms[i].visible = false;
             this.rooms[i].anchor.set(0.5);
             this.rooms[i].inputEnabled = true;
 
             this.rooms[i].events.onInputDown.add((text) => {
                 this.game.network.joinRoom(text.renderOrderID-1);
-                this.game.state.start('World1-Level1');
+                this.game.state.start('Waiting');
             });
             this.rooms[i].events.onInputOver.add((text) => {
                 text.tint = 0xFFBB00;
@@ -57,12 +62,18 @@ export class Multi extends Phaser.State {
             this.loader.visible = false;
             this.loaderMessage.visible = false;
 
+            this.players.text = 'Players : ' + this.game.network.players;
+            this.players.visible = true;
+
             this.game.network.rooms.forEach((room, index) => {
                 this.rooms[index].text = 'server ' + (index + 1) + ' : ' + room.length + ' / 2';
                 this.rooms[index].visible = true;
                 if(room.length == 2) {
                     this.rooms[index].tint = 0x9E9E9E
                     this.rooms[index].inputEnabled = false;
+                } else {
+                    this.rooms[index].tint = 0xFFFFFF;
+                    this.rooms[index].inputEnabled = true;
                 }
             });
 

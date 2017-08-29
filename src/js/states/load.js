@@ -20,6 +20,7 @@ export class Load extends Phaser.State {
         // menu resources
         this.load.image('menu', 'resources/images/menu.png');
         this.load.spritesheet('loader', 'resources/images/loading/loader.png', 32, 32);
+        this.load.spritesheet('loader-small', 'resources/images/loading/loader-small.png', 16, 16);
 
         // mobile controller resources
         this.load.image('up', 'resources/images/controller/up.png');
