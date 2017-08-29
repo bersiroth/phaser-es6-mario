@@ -31,7 +31,7 @@ export class List extends Phaser.State {
             this.rooms[i].inputEnabled = true;
 
             this.rooms[i].events.onInputDown.add((text) => {
-                this.game.network.joinRoom(text.renderOrderID-1);
+                this.game.network.joinRoom(text.renderOrderID-2);
                 this.game.state.start('Waiting');
             });
             this.rooms[i].events.onInputOver.add((text) => {
@@ -72,7 +72,7 @@ export class List extends Phaser.State {
                     this.rooms[index].tint = 0x9E9E9E
                     this.rooms[index].inputEnabled = false;
                 } else {
-                    this.rooms[index].tint = 0xFFFFFF;
+                    if(this.rooms[index].tint == 0x9E9E9E) this.rooms[index].tint = 0xFFFFFF;
                     this.rooms[index].inputEnabled = true;
                 }
             });
