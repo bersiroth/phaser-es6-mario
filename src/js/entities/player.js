@@ -199,7 +199,7 @@ export default class Player extends Entity {
             this.canJump = true;
         }, this);
 
-        if ((this.body.touching.down || this.body.onFloor()) && this.cursors.up.isDown && this.canJump) {
+        if (this.body.velocity.y == 0 && this.cursors.up.isDown && this.canJump) {
             this.animations.stop();
             this.frame = 5;
             this.body.velocity.y = Const.SMALL_JUMP_SPEED;
@@ -216,10 +216,6 @@ export default class Player extends Entity {
         } else if (this.jumptimer != 0) {
             this.jumptimer = 0;
             this.body.velocity.y = 0;
-        }
-
-        if(this.body.touching.up){
-            this.jumptimer = 0;
         }
     }
 
