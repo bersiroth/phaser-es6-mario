@@ -11,6 +11,15 @@ class Player {
         this.ready = false;
     }
 
+    update(data){
+        this.x = data.x;
+        this.y = data.y;
+        this.frame = data.frame;
+        this.face = data.face;
+        this.invulnerable = data.invulnerable;
+        this.power = data.power;
+    }
+
     setRoomId(roomId){
         this.roomId = roomId;
     }

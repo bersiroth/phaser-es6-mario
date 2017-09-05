@@ -20,7 +20,7 @@ export default class Network {
         }
 
         try{
-            this.socket = io.connect('http://89.157.223.253:8081?nickname='+this.nickname, {
+            this.socket = io.connect('http://172.17.0.2:8081?nickname='+this.nickname, {
                 reconnection: false
             });
 

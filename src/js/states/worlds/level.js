@@ -1,6 +1,6 @@
 import Const from "const";
-import Player from "entities/player";
-import Player2 from "entities/player2";
+import LocalPlayer from "entities/players/localPlayer";
+import RemotePlayer from "entities/players/remotePlayer";
 import Hud from "interfaces/hud";
 import MobileController from "interfaces/mobileController";
 
@@ -29,16 +29,17 @@ export default class Level extends Phaser.State {
 
         this.hud = new Hud(this.game, this);
 
-        this.player = new Player(this.game, 0, 0, 'mario-small', 1);
+        this.player = new LocalPlayer(this.game, 0, 0, 'mario-small', 1);
         this.game.world.addChild(this.player);
 
         if(this.game.network.socket != undefined) {
-            this.player2 = new Player2(this.game, 0, 0, 'luigi-small', 1);
+            this.player2 = new RemotePlayer(this.game, 0, 0, 'luigi-small', 1);
             this.game.world.addChild(this.player2);
             this.game.network.socket.on('updatePlayer', (data) => {
                 this.player2.position.set(data.x, data.y);
                 this.player2.frame = data.frame;
                 this.player2.scale.x = data.face;
+                this.player2.power = data.power;
             });
         }
 

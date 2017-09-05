@@ -3,8 +3,8 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 
-var {Player} = require('./src/js/server/entities/player');
-var {RoomManager} = require('./src/js/server/managers/roomManager');
+var {Player} = require('./server/entities/player');
+var {RoomManager} = require('./server/managers/roomManager');
 
 server.listen(8081,function(){ // Listens to port 8081
     console.log('Listening on '+server.address().port);
@@ -18,8 +18,14 @@ io.sockets.on('connection',(socket) => {
     roomManager.players += 1;
     console.log('Un joueur est connecté : ' + player.nickname);
 
+    var intervalCount = 0;
     setInterval(function(){
         socket.emit('update', roomManager);
+        if (intervalCount % 10 == 0 && player.roomId != null) {
+            console.log('Room manager : ');
+            console.log(roomManager.getRoom(player.roomId));
+        }
+        intervalCount++;
     },1000/5);
 
     socket.on('join',(roomId) => {
@@ -48,7 +54,8 @@ io.sockets.on('connection',(socket) => {
     });
 
     socket.on('updatePlayer',(data) => {
-        // socket.broadcast.to(currentRoom).emit('updatePlayer', data);
+        player.update(data);
+        socket.broadcast.to(player.roomId).emit('updatePlayer', data);
     });
 
     socket.on('disconnect',() => {
